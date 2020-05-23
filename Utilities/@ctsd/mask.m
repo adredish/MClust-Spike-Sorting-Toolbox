@@ -47,6 +47,6 @@ if masking
 else %not posneg
 	D(~keep,:) = NaN;
 end	
-D = reshape(D, [size(D,1), prod(shape(2:end))]);
+D = reshape(D, [size(D,1), shape(2:end)]);
 
 X = tsd(T, D);

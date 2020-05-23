@@ -16,6 +16,9 @@ function X = mask(tsa, t0, t1, masking)
 % ADR 1998
 % version L6.0 
 % ADR Jan/2007 - incorporated with posneg
+% ADR May/2020 - there was a bug whereby D was not reshaped properly
+% afterwards, (reshaped as prod(shape) rather than shape).  This broke ND
+% matrices.  FIXED.
 %
 % Status: PROMOTED (Release version) 
 % See documentation for copyright (owned by original authors) and warranties (none!).
@@ -44,6 +47,6 @@ if masking
 else %not posneg
 	D(~keep,:) = NaN;
 end	
-D = reshape(D, [size(D,1), prod(shape(2:end))]);
+D = reshape(D, [size(D,1), shape(2:end)]);
 
 X = tsd(T, D);
