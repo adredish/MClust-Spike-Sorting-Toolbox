@@ -72,6 +72,7 @@ end
 
 binsUsed = logspace(minLogISI,maxLogISI,nBins);
 H = histcn(ISI+eps, binsUsed);
+H = [H;nan];  % histogram has changed, need to match size of bins used
 
 %-------------------
 if nargout == 0 || ~isempty(axesHandle)  % no output args, plot it
