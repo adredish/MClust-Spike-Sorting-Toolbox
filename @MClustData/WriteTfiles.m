@@ -74,31 +74,38 @@ for iC = 1:nClust
       if (fp == -1)
          errordlg(['Could not open file"' fn '".']);
       end
-      MClust.WriteHeader(fp, ...
-          'T-file', ...
-          'Output from MClust', ...
-          'Time of spiking stored in timestamps (tenths of msecs)',...
-          'as unsigned integer: uint32');
+
       switch MCS.tEXT
           case 'raw64'
               tSpikes = uint64(tSpikes); % 
-              fwrite(fp, tSpikes, 'uint64');              
+              strunit = '(secs)';
+              strformat = 'uint64';              
           case 't64'
               tSpikes = uint64(tSpikes*10000); % converts to 0.1 ms, but saves as 64bit 
-              fwrite(fp, tSpikes, 'uint64');
+              strunit = '(tenths of msecs)';
+              strformat = 'uint64';
           case 'raw32'
               tSpikes = uint32(tSpikes); % 
-              fwrite(fp, tSpikes, 'uint32');                            
+              strunit = '(secs)';
+              strformat = 'uint32';                           
           case 't32'
               tSpikes = uint32(tSpikes*10000); % NEED TO CONVERT TO NEURALYNX's .t format save in integers of 0.1ms
-              fwrite(fp, tSpikes, 'uint32');
+              strunit = '(tenths of msecs)';
+              strformat = 'uint32';
           case 't'
               tSpikes = uint32(tSpikes*10000); % NEED TO CONVERT TO NEURALYNX's .t format save in integers of 0.1ms
-              fwrite(fp, tSpikes, 'uint32');
+              strunit = '(tenths of msecs)';
+              strformat = 'uint32';
           otherwise
               error('MClust::tEXT', 'Unknown extension for t files');
       end
-       
+      
+      MClust.WriteHeader(fp, ...
+          'T-file', ...
+          'Output from MClust', ...
+          ['Time of spiking stored in timestamps ' strunit],...
+          ['as unsigned integer: ' strformat]);
+      fwrite(fp, tSpikes, strformat);
       fclose(fp);
    end
 end
