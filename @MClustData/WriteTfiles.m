@@ -78,7 +78,7 @@ for iC = 1:nClust
       switch MCS.tEXT
           case 'raw64'
               tSpikes = uint64(tSpikes); % 
-              strunit = '(secs)';
+              strunit = '(same as input)';
               strformat = 'uint64';              
           case 't64'
               tSpikes = uint64(tSpikes*10000); % converts to 0.1 ms, but saves as 64bit 
@@ -86,7 +86,7 @@ for iC = 1:nClust
               strformat = 'uint64';
           case 'raw32'
               tSpikes = uint32(tSpikes); % 
-              strunit = '(secs)';
+              strunit = '(same as input)';
               strformat = 'uint32';                           
           case 't32'
               tSpikes = uint32(tSpikes*10000); % NEED TO CONVERT TO NEURALYNX's .t format save in integers of 0.1ms
